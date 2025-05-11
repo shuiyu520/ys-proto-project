@@ -26,8 +26,54 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/HelloReply'
+    /user/info:
+        get:
+            tags:
+                - Greeter
+            description: 查询用户信息.
+            operationId: Greeter_GetUserInfo
+            parameters:
+                - name: userId
+                  in: query
+                  description: 用户id 24位.
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/GetUserInfoResp'
 components:
     schemas:
+        GetUserInfoResp:
+            type: object
+            properties:
+                userId:
+                    type: string
+                    description: 用户id.
+                schoolYear:
+                    type: string
+                    description: 年级.
+                gender:
+                    type: string
+                    description: 性别 male:男 female:女.
+                headImg:
+                    type: string
+                    description: 头像.
+                id:
+                    type: integer
+                    description: 定义int类型时，最好使用int32。pb定义的int64类型，转成的go struct序列化为json时，输出为字符串
+                    format: int32
+                createTime:
+                    type: string
+                    description: 时间类型.
+                    format: RFC3339
+                map:
+                    type: object
+                    description: 通用类型 经常用在处理转发数据.
+            description: 出参 GetUserInfoResp 用户信息响应数据.
         HelloReply:
             type: object
             properties:

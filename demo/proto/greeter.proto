@@ -3,6 +3,8 @@ syntax = "proto3";
 package helloworld.v1;
 
 import "google/api/annotations.proto";
+import "google/protobuf/struct.proto";
+import "google/protobuf/timestamp.proto";
 
 option go_package = "demo/api/helloworld/v1;v1";
 option java_multiple_files = true;
@@ -17,7 +19,41 @@ service Greeter {
       get: "/helloworld/{name}"
     };
   }
+
+  // 查询用户信息.
+  rpc GetUserInfo(GetUserInfoReq) returns (GetUserInfoResp) {
+    option (google.api.http) = {
+      get: "/user/info"
+    };
+  }
 }
+
+// 入参
+// GetUserInfoReq 查询用户信息.
+message GetUserInfoReq {
+  // 用户id 24位.
+  string userId = 1;
+}
+
+// 出参
+// GetUserInfoResp 用户信息响应数据.
+message GetUserInfoResp {
+    // 用户id.
+    string userId = 1;
+    // 年级.
+    string schoolYear = 2;
+    // 性别 male:男 female:女.
+    string gender = 3;
+    // 头像.
+    string headImg = 4;
+    // 定义int类型时，最好使用int32。pb定义的int64类型，转成的go struct序列化为json时，输出为字符串
+    int32 id = 5;
+    // 时间类型.
+    google.protobuf.Timestamp createTime = 6;
+    // 通用类型 经常用在处理转发数据.
+    google.protobuf.Struct map = 7;
+}
+
 
 // The request message containing the user's name.
 message HelloRequest {
