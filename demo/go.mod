@@ -1,4 +1,4 @@
-module github.com/shuiyu520/ys-proto-project
+module github.com/shuiyu520/ys-proto-project/demo
 
 go 1.23.0
 
